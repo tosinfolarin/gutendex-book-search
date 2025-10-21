@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import BooksList from "../bookResults/page";
 // import { Checkbox } from "@/components/ui/checkbox"
 // import { Label } from "@/components/ui/label"
 
@@ -43,6 +44,7 @@ const bookSearch = () => {
   };
 
   return (
+    <div>
     <div className="max-w-md mx-auto mt-20 p-6 bg-white rounded-lg shadow-md space-y-4">
       <h1 className="text-xl font-semibold">Book Title:</h1>
       <Input 
@@ -82,6 +84,11 @@ const bookSearch = () => {
         Submit 
       </Button>
     </div>
+    <BooksList/>
+    </div>
+
+
+  
   )
 }
 
