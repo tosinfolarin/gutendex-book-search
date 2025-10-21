@@ -29,8 +29,12 @@ type Book = {
   subjects: string;
 };
 
-export default function BooksList() {
-  const [books, setBooks] = useState<Book[]>([]);
+type BooksListProps = {
+  books?: Book[];
+};
+
+export default function BooksList({ books: booksFromProps }: BooksListProps) {
+  const [books, setBooks] = useState<Book[]>(booksFromProps || []);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [pageUrl, setPageUrl] = useState("https://gutendex.com/books");
@@ -39,6 +43,8 @@ export default function BooksList() {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
+    if (booksFromProps) return; 
+    
     const fetchBooks = async () => {
       setLoading(true);
       setError(null);
@@ -77,10 +83,10 @@ export default function BooksList() {
       setCurrentPage((prev) => Math.max(prev - 1, 1));
     }
   };
-  
 
-  if (loading) return <p>Loading books...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (!booksFromProps && loading) return <p>Please wait, books will display shortly...</p>;
+  if (!booksFromProps && error) return <p>Error: {error}</p>;
+  
 
   return (
     <div style={{ padding: '40px' }}>

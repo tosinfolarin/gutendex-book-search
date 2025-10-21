@@ -12,8 +12,12 @@ const bookSearch = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [topic, setTopic] = useState("");
-  // const [language, setLanguage] = useState("");
-
+  const [books, setBooks] = useState([]);
+  const [pageUrl, setPageUrl] = useState("https://gutendex.com/books");
+  const [nextUrl, setNextUrl] = useState(null);
+  const [prevUrl, setPrevUrl] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  
   const handleSubmit = async () => {
     console.log("The form has been submitted:", { title, author, topic});
     const URL = 'https://gutendex.com'
@@ -38,8 +42,23 @@ const bookSearch = () => {
   
       const data = await response.json(); // gets a response from the server
       console.log("Success:", data);
+      setBooks(data.results); // this sets the results as books
     } catch (error) {
       console.error("Error submitting form:", error);
+    }
+  };
+
+  const handleNext = () => {
+    if (nextUrl) {
+      setPageUrl(nextUrl);
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+  
+  const handlePrevious = () => {
+    if (prevUrl) {
+      setPageUrl(prevUrl);
+      setCurrentPage((prev) => Math.max(prev - 1, 1));
     }
   };
 
@@ -70,25 +89,15 @@ const bookSearch = () => {
         onChange={(event) => setTopic(event.target.value)} 
       />
 
-      {/* <h1 className="text-xl font-semibold">Language:</h1>
-        <div className="flex items-center space-x-2" >
-          <Checkbox id="english" value="en"/>
-          <Label htmlFor="english">English</Label>
-          <Checkbox id="french" value="fr"/>
-          <Label htmlFor="french">French</Label>
-          <Checkbox id="finnish" value="fi"/>
-          <Label htmlFor="finnish">Finnish</Label>
-        </div> */}
-
       <Button variant="outline" className="w-full" onClick={handleSubmit}>
         Submit 
       </Button>
+    </div> 
+    {books.length > 0 && 
+    <BooksList books={books} />} 
     </div>
-    <BooksList/>
-    </div>
-
-
-  
+    
+    //only shows booklist if there has been a search
   )
 }
 
