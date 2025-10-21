@@ -13,13 +13,10 @@ const bookSearch = () => {
   const [author, setAuthor] = useState("");
   const [topic, setTopic] = useState("");
   const [books, setBooks] = useState([]);
-  const [pageUrl, setPageUrl] = useState("https://gutendex.com/books");
-  const [nextUrl, setNextUrl] = useState(null);
-  const [prevUrl, setPrevUrl] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
   
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     console.log("The form has been submitted:", { title, author, topic});
+    e.preventDefault();
     const URL = 'https://gutendex.com'
    // This implementation will take the form input but allow for null values also, it then joins them
     const searchTerms = [title, author, topic]
@@ -48,56 +45,40 @@ const bookSearch = () => {
     }
   };
 
-  const handleNext = () => {
-    if (nextUrl) {
-      setPageUrl(nextUrl);
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
-  
-  const handlePrevious = () => {
-    if (prevUrl) {
-      setPageUrl(prevUrl);
-      setCurrentPage((prev) => Math.max(prev - 1, 1));
-    }
-  };
-
   return (
     <div>
-    <div className="max-w-md mx-auto mt-20 p-6 bg-white rounded-lg shadow-md space-y-4">
-      <h1 className="text-xl font-semibold">Book Title:</h1>
-      <Input 
-        type="text" 
-        placeholder="Title" 
-        value={title} 
-        onChange={(event) => setTitle(event.target.value)} 
-      />
+      <form className="max-w-md mx-auto mt-20 p-6 bg-white rounded-lg shadow-md space-y-4" onSubmit={handleSubmit}>
+        <h1 className="text-xl font-semibold">Book Title:</h1>
+        <Input 
+          type="text" 
+          placeholder="Title" 
+          value={title} 
+          onChange={(event) => setTitle(event.target.value)} 
+        />
 
-      <h1 className="text-xl font-semibold">Author:</h1>
-      <Input 
-        type="text" 
-        placeholder="Author" 
-        value={author} 
-        onChange={(event) => setAuthor(event.target.value)} 
-      />
+        <h1 className="text-xl font-semibold">Author:</h1>
+        <Input 
+          type="text" 
+          placeholder="Author" 
+          value={author} 
+          onChange={(event) => setAuthor(event.target.value)} 
+        />
 
-      <h1 className="text-xl font-semibold">Topic:</h1>
-      <Input 
-        type="text" 
-        placeholder="Topic / Subject" 
-        value={topic} 
-        onChange={(event) => setTopic(event.target.value)} 
-      />
+        <h1 className="text-xl font-semibold">Topic:</h1>
+        <Input 
+          type="text" 
+          placeholder="Topic / Subject" 
+          value={topic} 
+          onChange={(event) => setTopic(event.target.value)} 
+        />
 
-      <Button variant="outline" className="w-full" onClick={handleSubmit}>
-        Submit 
-      </Button>
-    </div> 
-    {books.length > 0 && 
-    <BooksList books={books} />} 
+        <Button type="submit" variant="outline" className="w-full">
+          Submit 
+        </Button>
+      </form> 
+        {books.length > 0 && 
+        <BooksList books={books} />} 
     </div>
-    
-    //only shows booklist if there has been a search
   )
 }
 

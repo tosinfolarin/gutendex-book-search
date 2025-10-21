@@ -70,6 +70,16 @@ export default function BooksList({ books: booksFromProps }: BooksListProps) {
     fetchBooks();
   }, [pageUrl]);
 
+    // This Syncs with new books passed from props to allow the form to be resubmitted and resets the pagination number to 1
+  useEffect(() => {
+    if (booksFromProps) {
+      setBooks(booksFromProps);
+      setNextUrl(null);
+      setPrevUrl(null);
+      setCurrentPage(1);
+    }
+  }, [booksFromProps]);
+
   const handleNext = () => {
     if (nextUrl) {
       setPageUrl(nextUrl);
