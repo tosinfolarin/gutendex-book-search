@@ -3,20 +3,43 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
+// import { Checkbox } from "@/components/ui/checkbox"
+// import { Label } from "@/components/ui/label"
 
 const bookSearch = () => {
   // this sets the initial values to empty before they are filled on the form
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [topic, setTopic] = useState("");
-  const [language, setLanguage] = useState("");
+  // const [language, setLanguage] = useState("");
 
-  const handleSubmit = () => {
-    // this will eventually handle how I will plug this information into the API
-    console.log("The form has been submitted:");
-    console.log({ title, author, topic, language });
+  const handleSubmit = async () => {
+    console.log("The form has been submitted:", { title, author, topic});
+    const URL = 'https://gutendex.com'
+   // This implementation will take the form input but allow for null values also, it then joins them
+    const searchTerms = [title, author, topic]
+    .filter(Boolean) // this removes empty strings, null, or undefined values
+    .join(' ');       // joins remaining terms with space
+
+    const encodedQuery = encodeURIComponent(searchTerms);
+
+    try {
+    const response = await fetch(`${URL}/books?search=${encodedQuery}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error("Unable to call API");
+      }
+  
+      const data = await response.json(); // gets a response from the server
+      console.log("Success:", data);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   return (
@@ -45,7 +68,7 @@ const bookSearch = () => {
         onChange={(event) => setTopic(event.target.value)} 
       />
 
-      <h1 className="text-xl font-semibold">Language:</h1>
+      {/* <h1 className="text-xl font-semibold">Language:</h1>
         <div className="flex items-center space-x-2" >
           <Checkbox id="english" value="en"/>
           <Label htmlFor="english">English</Label>
@@ -53,7 +76,7 @@ const bookSearch = () => {
           <Label htmlFor="french">French</Label>
           <Checkbox id="finnish" value="fi"/>
           <Label htmlFor="finnish">Finnish</Label>
-        </div>
+        </div> */}
 
       <Button variant="outline" className="w-full" onClick={handleSubmit}>
         Submit 
