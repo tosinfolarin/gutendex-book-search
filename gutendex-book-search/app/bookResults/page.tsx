@@ -1,4 +1,4 @@
-'use client'; // If you're using Next.js App Router
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import {
@@ -7,8 +7,7 @@ import {
   PaginationItem,
   PaginationLink,
   PaginationPrevious,
-  PaginationNext,
-  PaginationEllipsis
+  PaginationNext
 } from "@/components/ui/pagination";
 
 
@@ -34,16 +33,24 @@ export default function BooksList() {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [pageUrl, setPageUrl] = useState("https://gutendex.com/books");
+  const [nextUrl, setNextUrl] = useState(null);
+  const [prevUrl, setPrevUrl] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchBooks = async () => {
+      setLoading(true);
+      setError(null);
+  
       try {
-        const res = await fetch('https://gutendex.com/books');
+        const res = await fetch(pageUrl);
         const data = await res.json();
-
-        // Check and set results
+  
         if (Array.isArray(data.results)) {
           setBooks(data.results);
+          setNextUrl(data.next);
+          setPrevUrl(data.previous);
         } else {
           throw new Error('Invalid API response structure');
         }
@@ -53,9 +60,24 @@ export default function BooksList() {
         setLoading(false);
       }
     };
-
+  
     fetchBooks();
-  }, []);
+  }, [pageUrl]);
+
+  const handleNext = () => {
+    if (nextUrl) {
+      setPageUrl(nextUrl);
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+  
+  const handlePrevious = () => {
+    if (prevUrl) {
+      setPageUrl(prevUrl);
+      setCurrentPage((prev) => Math.max(prev - 1, 1));
+    }
+  };
+  
 
   if (loading) return <p>Loading books...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -118,19 +140,29 @@ export default function BooksList() {
         <Pagination>
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious href="#" />
+              <PaginationPrevious
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handlePrevious();
+              }}
+              className={prevUrl ? "" : "opacity-50 pointer-events-none"}
+             />
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
+            <PaginationLink href="#" isActive>
+              {currentPage}
+            </PaginationLink>
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink href="#">2</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
+              <PaginationNext 
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNext();
+              }}
+              className={nextUrl ? "" : "opacity-50 pointer-events-none"}
+            />
             </PaginationItem>
          </PaginationContent>
         </Pagination>
