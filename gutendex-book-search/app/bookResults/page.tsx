@@ -33,52 +33,59 @@ type Book = {
 type BooksListProps = {
   books?: Book[];
   loading?: boolean;
+  nextUrl?: string | null;
+  prevUrl?: string | null;
 };
 
-export default function BooksList({ books: booksFromProps, loading: loadingFromProps }: BooksListProps) {
+export default function BooksList({
+  books: booksFromProps,
+  loading: loadingFromProps,
+  nextUrl: nextUrlFromProps,
+  prevUrl: prevUrlFromProps
+}: BooksListProps) {
   const [books, setBooks] = useState<Book[]>(booksFromProps || []);
-  const [error, setError] = useState<string | null>(null);
-  const [pageUrl, setPageUrl] = useState("https://gutendex.com/books");
-  const [nextUrl, setNextUrl] = useState(null);
-  const [prevUrl, setPrevUrl] = useState(null);
+  const [nextUrl, setNextUrl] = useState<string | null>(nextUrlFromProps || null);
+  const [prevUrl, setPrevUrl] = useState<string | null>(prevUrlFromProps || null);
+  const [pageUrl, setPageUrl] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [error, setError] = useState<string | null>(null);
 
+  // This Syncs with new books passed from props to allow the form 
+  //to be resubmitted and resets the pagination number to 1
   useEffect(() => {
-    if (booksFromProps) return; 
-    
+    if (booksFromProps) setBooks(booksFromProps);
+    setNextUrl(nextUrlFromProps || null);
+    setPrevUrl(prevUrlFromProps || null);
+    setCurrentPage(1);
+    setPageUrl(null);
+    setError(null);
+  }, [booksFromProps, nextUrlFromProps, prevUrlFromProps]);
+
+  // Fetch data when pageUrl changes
+  useEffect(() => {
+    if (!pageUrl) return;
+
     const fetchBooks = async () => {
-      setError(null);
-  
       try {
         const res = await fetch(pageUrl);
+        if (!res.ok) throw new Error(`Failed to fetch: ${res.status}`);
         const data = await res.json();
-  
+
         if (Array.isArray(data.results)) {
           setBooks(data.results);
           setNextUrl(data.next);
           setPrevUrl(data.previous);
+          setError(null);
         } else {
           throw new Error('Invalid API response structure');
         }
       } catch (err: any) {
         setError(err.message || 'Failed to fetch books.');
-      } 
+      }
     };
-  
+
     fetchBooks();
   }, [pageUrl]);
-
-
-    // This Syncs with new books passed from props to allow the form 
-    //to be resubmitted and resets the pagination number to 1
-  useEffect(() => {
-    if (booksFromProps) {
-      setBooks(booksFromProps);
-      setNextUrl(null);
-      setPrevUrl(null);
-      setCurrentPage(1);
-    }
-  }, [booksFromProps]);
 
   const handleNext = () => {
     if (nextUrl) {
@@ -86,7 +93,7 @@ export default function BooksList({ books: booksFromProps, loading: loadingFromP
       setCurrentPage((prev) => prev + 1);
     }
   };
-  
+
   const handlePrevious = () => {
     if (prevUrl) {
       setPageUrl(prevUrl);
@@ -122,22 +129,22 @@ export default function BooksList({ books: booksFromProps, loading: loadingFromP
               boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
             }}
           >
-            <h2 
-              style={{ 
-                fontSize: '1.2rem', 
-                justifyContent: 'center', 
+            <h2
+              style={{
+                fontSize: '1.2rem',
+                justifyContent: 'center',
                 fontWeight: 'bold',
               }}
-              >{book.title}
+            >{book.title}
             </h2>
 
             {book.formats['image/jpeg'] && (
               <img
                 src={book.formats['image/jpeg']}
                 alt={`${book.title} cover`}
-                style={{ 
-                  width: '150px', 
-                  height: 'auto', 
+                style={{
+                  width: '150px',
+                  height: 'auto',
                   margin: '10px auto',
                   display: 'block' }}
               />
@@ -147,30 +154,30 @@ export default function BooksList({ books: booksFromProps, loading: loadingFromP
               {book.authors.map((author) => author.name).join(', ')}
             </p>
             <p>
-            <strong>Topics/Subjects: </strong> {book.subjects}
+              <strong>Topics/Subjects: </strong> {book.subjects}
             </p>
           </li>
         ))}
       </ul>
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
               href="#"
               onClick={(e) => {
                 e.preventDefault();
                 handlePrevious();
               }}
               className={prevUrl ? "" : "opacity-50 pointer-events-none"}
-             />
-            </PaginationItem>
-            <PaginationItem>
+            />
+          </PaginationItem>
+          <PaginationItem>
             <PaginationLink href="#" isActive>
               {currentPage}
             </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext 
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext
               href="#"
               onClick={(e) => {
                 e.preventDefault();
@@ -178,9 +185,9 @@ export default function BooksList({ books: booksFromProps, loading: loadingFromP
               }}
               className={nextUrl ? "" : "opacity-50 pointer-events-none"}
             />
-            </PaginationItem>
-         </PaginationContent>
-        </Pagination>
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 }

@@ -7,7 +7,7 @@ import BooksList from "../bookResults/page";
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 
-const bookSearch = () => {
+export default function BookSearch() {
   // this sets the initial values to empty before they are filled on the form
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -15,6 +15,8 @@ const bookSearch = () => {
   const [languages, setLanguages] = useState<string[]>([]);
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
+  const [prevPageUrl, setPrevPageUrl] = useState<string | null>(null);
 
   /* this is toggle logic that removes or adds the language code ot the query 
    depending on if its been  previously selected */
@@ -25,16 +27,17 @@ const bookSearch = () => {
         : [...prev, languageCode] // adds the code if its not been selected already
     );
   };
-  
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     console.log("The form has been submitted:", { title, author, topic, languages});
     e.preventDefault();
     setLoading(true);
+    setNextPageUrl(null); // resets pagination on new search
+    setPrevPageUrl(null);
+    setBooks([]);
 
-    await new Promise(requestAnimationFrame);
-    
-    const URL = 'https://gutendex.com'
-   // This implementation will take the form input but allow for null values also, it then joins them
+    const URL = "https://gutendex.com";
+    // This implementation will take the form input but allow for null values also, it then joins them
     const searchTerms = [title, author, topic]
     .filter(Boolean) // this removes empty strings, null, or undefined values
     .join(' ');       // joins remaining terms with space
@@ -53,13 +56,16 @@ const bookSearch = () => {
       if (!response.ok) {
         throw new Error("Unable to call API");
       }
-  
+
       const data = await response.json(); // gets a response from the server
       console.log("Success:", data);
       setBooks(data.results); // this sets the results as books
-      setLoading(false);
+      setNextPageUrl(data.next);
+      setPrevPageUrl(data.previous);
     } catch (error) {
       console.error("Error submitting form:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -104,10 +110,15 @@ const bookSearch = () => {
           Submit 
         </Button>
       </form> 
-        {books.length > 0 && 
-        <BooksList books={books} loading={loading}/>} 
-    </div>
-  )
-}
 
-export default bookSearch
+      {books.length > 0 && (
+        <BooksList
+          books={books}
+          loading={loading}
+          nextUrl={nextPageUrl}
+          prevUrl={prevPageUrl}
+        />
+      )}
+    </div>
+  );
+}
