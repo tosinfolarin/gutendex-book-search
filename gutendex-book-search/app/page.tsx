@@ -16,11 +16,3 @@ export default function Home() {
     </div>
   );
 }
-
-
-<div
-  className="min-h-screen bg-cover bg-center"
-  style={{ backgroundImage: "url('/your-image.jpg')" }}
->
-  {/* Page content goes here */}
-</div>
