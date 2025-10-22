@@ -27,15 +27,16 @@ type Book = {
     'text/html'?: string;
   };
   subjects: string;
+  languages: string[];
 };
 
 type BooksListProps = {
   books?: Book[];
+  loading?: boolean;
 };
 
-export default function BooksList({ books: booksFromProps }: BooksListProps) {
+export default function BooksList({ books: booksFromProps, loading: loadingFromProps }: BooksListProps) {
   const [books, setBooks] = useState<Book[]>(booksFromProps || []);
-  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [pageUrl, setPageUrl] = useState("https://gutendex.com/books");
   const [nextUrl, setNextUrl] = useState(null);
@@ -46,7 +47,6 @@ export default function BooksList({ books: booksFromProps }: BooksListProps) {
     if (booksFromProps) return; 
     
     const fetchBooks = async () => {
-      setLoading(true);
       setError(null);
   
       try {
@@ -62,15 +62,15 @@ export default function BooksList({ books: booksFromProps }: BooksListProps) {
         }
       } catch (err: any) {
         setError(err.message || 'Failed to fetch books.');
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
   
     fetchBooks();
   }, [pageUrl]);
 
-    // This Syncs with new books passed from props to allow the form to be resubmitted and resets the pagination number to 1
+
+    // This Syncs with new books passed from props to allow the form 
+    //to be resubmitted and resets the pagination number to 1
   useEffect(() => {
     if (booksFromProps) {
       setBooks(booksFromProps);
@@ -94,9 +94,8 @@ export default function BooksList({ books: booksFromProps }: BooksListProps) {
     }
   };
 
-  if (!booksFromProps && loading) return <p>Please wait, books will display shortly...</p>;
-  if (!booksFromProps && error) return <p>Error: {error}</p>;
-  
+  if (loadingFromProps) return <p className="text-center text-lg mt-10">Please wait, books will display shortly...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div style={{ padding: '40px' }}>
