@@ -47,6 +47,6 @@ this helped but also followed a youtube tutorial on setting up the enviornment h
 https://www.youtube.com/watch?v=AS79oJ3Fcf0
 
 
-Bugs that need fixing:
+Bugs that can be fixed to improve the application:
 Currently when loading the information to tell the user it is loading isn't displaying as expected
-Currently if the search returns an empty array, there is no information being displayed to the user
+Currently if the API call returns an empty array, there is no information being displayed to the user to say this

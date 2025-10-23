@@ -81,7 +81,11 @@ export default function BookSearch({
 
   return (
     <div>
-      <h1 className="text-center text-4xl font-bold my-6 text-white pt-7"> Search for a book of your choice! </h1>
+      <div className="flex items-center justify-center">
+        <h1 className="inline-block bg-white text-black px-6 py-3 text-4xl font-bold">
+          Search for a book of your choice!
+        </h1>
+      </div>
       <form className="max-w-md mx-auto mt-20 p-6 bg-white rounded-lg shadow-md space-y-4" onSubmit={handleSubmit}>
         <h1 className="text-xl font-semibold">Book Title:</h1>
         <Input 
