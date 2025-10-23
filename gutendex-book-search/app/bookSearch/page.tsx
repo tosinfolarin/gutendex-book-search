@@ -3,20 +3,34 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import BooksList from "../bookResults/page";
+// import BooksList from "../bookResults/page";
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 
-export default function BookSearch() {
+import { Dispatch, SetStateAction } from 'react';
+
+type BookSearchProps = {
+  setBooks: Dispatch<SetStateAction<any[]>>;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  setNextPageUrl: Dispatch<SetStateAction<string | null>>;
+  setPrevPageUrl: Dispatch<SetStateAction<string | null>>;
+};
+
+export default function BookSearch({
+  setBooks,
+  setLoading,
+  setNextPageUrl,
+  setPrevPageUrl,
+}: BookSearchProps) {
   // this sets the initial values to empty before they are filled on the form
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [topic, setTopic] = useState("");
   const [languages, setLanguages] = useState<string[]>([]);
-  const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
-  const [prevPageUrl, setPrevPageUrl] = useState<string | null>(null);
+  // const [books, setBooks] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  // const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
+  // const [prevPageUrl, setPrevPageUrl] = useState<string | null>(null);
 
   /* this is toggle logic that removes or adds the language code ot the query 
    depending on if its been  previously selected */
@@ -71,7 +85,7 @@ export default function BookSearch() {
 
   return (
     <div>
-      <h1 className="text-center text-4xl font-bold my-6"> Search for a book of your choice! </h1>
+      <h1 className="text-center text-4xl font-bold my-6 text-white pt-7"> Search for a book of your choice! </h1>
       <form className="max-w-md mx-auto mt-20 p-6 bg-white rounded-lg shadow-md space-y-4" onSubmit={handleSubmit}>
         <h1 className="text-xl font-semibold">Book Title:</h1>
         <Input 
@@ -105,6 +119,8 @@ export default function BookSearch() {
         <Label htmlFor="french">French</Label>
         <Checkbox id="finnish" checked={languages.includes("fi")} onCheckedChange={() => handleLanguageChange("fi")}/>
         <Label htmlFor="finnish">Finnish</Label>
+        <Checkbox id="other" checked={languages.includes("")}/>
+        <Label htmlFor="all">Other</Label>
       </div>
 
         <Button type="submit" variant="outline" className="w-full">
@@ -112,14 +128,14 @@ export default function BookSearch() {
         </Button>
       </form> 
 
-      {books.length > 0 && (
+      {/* {books.length > 0 && (
         <BooksList
           books={books}
           loading={loading}
           nextUrl={nextPageUrl}
           prevUrl={prevPageUrl}
         />
-      )}
+      )} */}
     </div>
   );
 }

@@ -17,7 +17,7 @@ type Author = {
   death_year?: number;
 };
 
-type Book = {
+export type Book = {
   id: number;
   title: string;
   authors: Author[];
@@ -122,6 +122,7 @@ export default function BooksList({
             key={book.id}
             style={{
               textAlign: 'center',
+              background: '#FFFFFF',
               padding: '20px',
               border: '1px solid #ccc',
               borderRadius: '8px',
@@ -168,7 +169,8 @@ export default function BooksList({
                 e.preventDefault();
                 handlePrevious();
               }}
-              className={prevUrl ? "" : "opacity-50 pointer-events-none"}
+              className={`${prevUrl ? "bg-white hover:bg-gray-500" : "text-white opacity-50 pointer-events-none"} rounded`}
+
             />
           </PaginationItem>
           <PaginationItem>
@@ -183,7 +185,7 @@ export default function BooksList({
                 e.preventDefault();
                 handleNext();
               }}
-              className={nextUrl ? "" : "opacity-50 pointer-events-none"}
+              className={`${nextUrl ? "bg-white hover:bg-gray-500" : "text-white opacity-50 pointer-events-none"} rounded`}
             />
           </PaginationItem>
         </PaginationContent>
