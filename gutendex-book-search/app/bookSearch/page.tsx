@@ -82,7 +82,7 @@ export default function BookSearch({
   return (
     <div>
       <div className="flex items-center justify-center">
-        <h1 className="inline-block bg-white text-black px-6 py-3 text-4xl font-bold">
+        <h1 className="inline-block bg-white text-black px-6 py-3 text-4xl font-bold rounded-md">
           Search for a book of your choice!
         </h1>
       </div>
