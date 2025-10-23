@@ -18,17 +18,16 @@ describe('bookSearch', () => {
           setPrevPageUrl={jest.fn()}
         />
       );
-      expect(screen.getByText('Book Title')).toBeVisible();
-      expect(screen.getByText('Author')).toBeVisible();
-      expect(screen.getByText('Topic')).toBeVisible();
-      expect(screen.getByText('Language')).toBeVisible();
+      expect(screen.getByText(/Book Title:/i)).toBeInTheDocument();
+      expect(screen.getByText(/Author:/i)).toBeInTheDocument();
+      expect(screen.getByText(/Topic:/i)).toBeInTheDocument();
+      expect(screen.getByText(/Language:/i)).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
     });
-    // it('should call the gutendex api when the form is submitted', () => {
-    //   render(
-    //     <BookSearch
-    //     // onSubmit={jest.fn()}
-    //     />
-    //   );
-    // });
+    it.skip('should call the gutendex api when the form is submitted', () => {
+     // display form 
+     // mock submit
+     // mock api call
+    });
   });
   
