@@ -108,7 +108,7 @@ export default function BookSearch({
         />
 
       <h1 className="text-xl font-semibold">Language:</h1>
-      <div className="flex items-center gap-2">
+      <div className="flex flex-col sm:flex-row items-center gap-2">
         <Checkbox id="english" checked={languages.includes("en")} onCheckedChange={() => handleLanguageChange("en")}/>
         <Label htmlFor="english">English</Label>
         <Checkbox id="french" checked={languages.includes("fr")} onCheckedChange={() => handleLanguageChange("fr")}/>

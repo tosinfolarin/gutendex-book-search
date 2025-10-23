@@ -9,33 +9,7 @@ import {
   PaginationPrevious,
   PaginationNext
 } from "@/components/ui/pagination";
-
-
-type Author = {
-  name: string;
-  birth_year?: number;
-  death_year?: number;
-};
-
-export type Book = {
-  id: number;
-  title: string;
-  authors: Author[];
-  download_count: number;
-  formats: {
-    'image/jpeg'?: string;
-    'text/html'?: string;
-  };
-  subjects: string;
-  languages: string[];
-};
-
-type BooksListProps = {
-  books?: Book[];
-  loading?: boolean;
-  nextUrl?: string | null;
-  prevUrl?: string | null;
-};
+import { Book, BooksListProps } from '@/app/bookTypes';
 
 export default function BooksList({
   books: booksFromProps,
@@ -101,8 +75,8 @@ export default function BooksList({
     }
   };
 
-  if (loadingFromProps) return <p className="text-center text-lg mt-10">Please wait, books will display shortly...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loadingFromProps) return <p className="text-center text-lg mt-10 text-white">Please wait, books will display shortly...</p>;
+  if (error) return <p className='text-red-600'>Error: {error}</p>;
 
   return (
     <div style={{ padding: '40px' }}>
