@@ -39,7 +39,7 @@ export default function BookSearch({
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    console.log("The form has been submitted:", { title, author, topic, languages});
+    console.log("The form has been submitted:", { title, author, topic, languages}); // left for debugging
     e.preventDefault();
     setLoading(true);
     setNextPageUrl(null); // resets pagination on new search
@@ -68,7 +68,7 @@ export default function BookSearch({
       }
 
       const data = await response.json(); // gets a response from the server
-      console.log("Success:", data);
+      console.log("Success:", data); // left for debugging
       setBooks(data.results); // this sets the results as books
       setNextPageUrl(data.next);
       setPrevPageUrl(data.previous);
