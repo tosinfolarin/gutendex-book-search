@@ -1,5 +1,5 @@
 # gutendex-book-search
-Displays book information fetched from the Gutendex API
+This displays book information fetched from the Gutendex API.
 
 I Decided to create a Next App as I understand Next is used at NLPatent uses Next.js so I thought this will be good practice. 
 First I went through a YouTube tutorial on Next and how it works. I then began in setting up the next App. 
@@ -7,6 +7,12 @@ First I went through a YouTube tutorial on Next and how it works. I then began i
 ![Alt text](image.png)
 
 Npm run dev to confirm the Next.JS app is running and this is where I have been observing the UI.
+
+Decisions on UI:
+- Library background image for fitting web app purpose
+- Intentional simple colours in consideration of those who are colour blind allowing for easy reading
+- displaying
+- Form and books on same page, this allows users to scroll easily and submit a new search
 
 The first new learning I came across was that the page name needs to be called page.tsx but the page is referenced through its directory name.
 I then realised when using hooks, I must have ‘use client’ at the top of the page as hooks cannot be used inside server components. So this statement makes the page use a Client component.
@@ -26,6 +32,21 @@ Initially the form was only working on one submit, didn’t allow for a second s
 
 My initial implementation of the Languages query wasn’t working as part of the search, so I added this line:
 
-const languageQuery = languages.length > 0 ? `&languages=${languages.join(',')}` : '';
+`const languageQuery = languages.length > 0 ? ``&languages=${languages.join(',')}' : '';`
 
-This mimics the query for the languages correctly.
+This mimics the query for the languages correctly. It checks if there is a language query and add it onto the original query to the API.
+
+
+I then noticed that the original implementation I had of the pagination wasn't working. This was because I made it originally in the bookResults component, the nextURL and prevURL component props were not being passed correctly to the form. I then modified this. 
+
+I was having issues with Jest unit testing to be visible because of typescript compiler:
+https://github.com/testing-library/jest-dom/issues/546
+
+this helped but also followed a youtube tutorial on setting up the enviornment here:
+
+https://www.youtube.com/watch?v=AS79oJ3Fcf0
+
+
+Bugs that need fixing:
+Currently when loading the information to tell the user it is loading isn't displaying as expected
+Currently if the search returns an empty array, there is no information being displayed to the user
