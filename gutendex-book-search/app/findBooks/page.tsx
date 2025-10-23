@@ -21,7 +21,7 @@ function FindBooks() {
             minHeight: '100vh', // make div at least full viewport height
             backgroundImage: "url('/images/LibraryBackground.png')",
             backgroundSize: 'cover',       // maintain image size
-            backgroundPosition: 'center',  // center the image
+            backgroundPosition: 'center',
         }}
         >
           <div className="p-4">
