@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-// import BooksList from "../bookResults/page";
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 import { Dispatch, SetStateAction } from 'react';
 
@@ -27,11 +26,7 @@ export default function BookSearch({
   const [author, setAuthor] = useState("");
   const [topic, setTopic] = useState("");
   const [languages, setLanguages] = useState<string[]>([]);
-  // const [books, setBooks] = useState([]);
-  // const [loading, setLoading] = useState(false);
-  // const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
-  // const [prevPageUrl, setPrevPageUrl] = useState<string | null>(null);
-
+  
   /* this is toggle logic that removes or adds the language code ot the query 
    depending on if its been  previously selected */
   const handleLanguageChange = (languageCode: string) => {
@@ -127,15 +122,6 @@ export default function BookSearch({
           Submit 
         </Button>
       </form> 
-
-      {/* {books.length > 0 && (
-        <BooksList
-          books={books}
-          loading={loading}
-          nextUrl={nextPageUrl}
-          prevUrl={prevPageUrl}
-        />
-      )} */}
     </div>
   );
 }
