@@ -1,28 +1,31 @@
 # gutendex-book-search
 This displays book information fetched from the Gutendex API.
 
-I Decided to create a Next App as I understand Next is used at NLPatent uses Next.js so I thought this will be good practice. 
-First I went through a YouTube tutorial on Next and how it works. I then began in setting up the next App. 
+I decided to use Next.js in creeting this application due to Alex informing me that NLPatent uses Next.js. Although I had not used Next.js before this, I beleived this would be good practice so I decided to take on the challenge.
+
+First I went through a YouTube tutorial on Next and how it works. I then began in setting up the Next App. 
 
 ![Alt text](image.png)
 
-Npm run dev to confirm the Next.JS app is running and this is where I have been observing the UI.
+I ran Npm run dev to confirm the Next.JS app is running and this is where I have been observing the UI changes.
 
 Decisions on UI:
-- Library background image for fitting web app purpose
-- Intentional simple colours in consideration of those who are colour blind allowing for easy reading
-- displaying
+- Library background image for fitting web app purpose.
+- Intentional simple colours in consideration of those who are colour blind allowing for easy reading.
+- Only displaying a few books per row to allow for better readability and not to overwhelm users
 - Form and books on same page, this allows users to scroll easily and submit a new search
 
 The first new learning I came across was that the page name needs to be called page.tsx but the page is referenced through its directory name.
+
 I then realised when using hooks, I must have ‘use client’ at the top of the page as hooks cannot be used inside server components. So this statement makes the page use a Client component.
 
-When building the UI I decided to use Schadcn.
-I then came into an issue where I found out  when using a <Select.Item /> component , each item must have a value prop that isn't an empty string "". This allows you to clear the selection.
+When building the UI I decided to use the Schadcn compoinent library.
+
+I then came into an issue where I found out when using a <Select.Item /> component, each item must have a value prop that isn't an empty string "". This allows you to clear the selection.
 
 ![Alt text](image-1.png)
 
-I then tested the API from gutendex.com using Postman
+I then tested the API from gutendex.com using Postman.
 
 I decided not to use any API keys as the gutendex API is a public API, if it was a private API, I would use API keys and utilise the gitignore file.
 
@@ -43,10 +46,13 @@ I was having issues with Jest unit testing to be visible because of typescript c
 https://github.com/testing-library/jest-dom/issues/546
 
 this helped but also followed a youtube tutorial on setting up the enviornment here:
-
 https://www.youtube.com/watch?v=AS79oJ3Fcf0
+
+While continuing to improve the application layout. I moved the types to a seperate file to improve the maintainability of the application.
 
 
 Bugs that can be fixed to improve the application:
-Currently when loading the information to tell the user it is loading isn't displaying as expected
-Currently if the API call returns an empty array, there is no information being displayed to the user to say this
+- Currently when loading the information to tell the user it is loading isn't displaying as expected
+- Currently if the API call returns an empty array, there is no information being displayed to the user to say this
+- Improve responsiveness
+- background Image pixelation on search
