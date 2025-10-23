@@ -26,6 +26,7 @@ export default function BookSearch({
   const [author, setAuthor] = useState("");
   const [topic, setTopic] = useState("");
   const [languages, setLanguages] = useState<string[]>([]);
+  const [allLanguages, setAllLanguages] = useState(false);
   
   /* this is toggle logic that removes or adds the language code ot the query 
    depending on if its been  previously selected */
@@ -114,8 +115,8 @@ export default function BookSearch({
         <Label htmlFor="french">French</Label>
         <Checkbox id="finnish" checked={languages.includes("fi")} onCheckedChange={() => handleLanguageChange("fi")}/>
         <Label htmlFor="finnish">Finnish</Label>
-        <Checkbox id="other" checked={languages.includes("")}/>
-        <Label htmlFor="all">Other</Label>
+        <Checkbox id="all" checked={allLanguages} onCheckedChange={() => setAllLanguages(prev => !prev)}/>
+        <Label htmlFor="all">Display All</Label>
       </div>
 
         <Button type="submit" variant="outline" className="w-full">

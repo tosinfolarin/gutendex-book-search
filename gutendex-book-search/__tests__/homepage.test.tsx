@@ -1,7 +1,4 @@
 import { render, screen } from '@testing-library/react'
-// should take you to the book search page when you click on the link
-// import userEvent from '@testing-library/user-event';
-
 import Homepage from "@/app/page";
 
 describe('homepage', () => {
@@ -28,6 +25,5 @@ describe('homepage', () => {
       // screen.logTestingPlaygroundURL()
       // const bookSearchHeading = await screen.findByText(/Search for a book of your choice!/i);
       // expect(bookSearchHeading).toBeInTheDocument();
-
     });
 });
