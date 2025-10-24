@@ -53,7 +53,7 @@ While continuing to improve the application layout. I moved the types to a seper
 While conducting the unit testing, I also came across an issue that was stopping components from being rendered. I found that Jest doesn't recongise component libraries like Schadcn, so I had to mock these calls.
 
 Bugs that can be fixed to improve the application:
-- Currently when loading the information on when next is clicked on pagination 
+- Currently no message is given to the user when loading the information after pagination clicks
 - Currently if the API call returns an empty array, there is no information being displayed to the user to say this
 - Improve responsiveness
 - background Image pixelation on search
