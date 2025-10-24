@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import BooksList from '@/app/bookResults/page';
 import { Book } from '@/app/bookTypes';
+import BookSearch from '@/app/bookSearch/page';
 
 const mockBooks: Book[] = [
     {
@@ -28,6 +29,9 @@ const mockBooks: Book[] = [
 
   
 describe('findBooks', () => {
+  const mockSetBooks = jest.fn();
+  const mockSetNextPageUrl = jest.fn();
+  const mockSetPrevPageUrl = jest.fn();
     it('should display the BooksList component', () => {
         render(<BooksList books={mockBooks} />);
     
@@ -46,9 +50,22 @@ describe('findBooks', () => {
 
         expect(screen.queryByAltText("1984 cover")).toBeNull();
   });
-    it.skip("should display the bookSearch component", () => {
-        // mock book search component
+  it.skip("should display the bookSearch component", () => {
+    render(
+      <BookSearch
+        setBooks={mockSetBooks}
+        setNextPageUrl={mockSetNextPageUrl}
+        setPrevPageUrl={mockSetPrevPageUrl}
+      />
+    );
+    expect(
+      screen.getByText("Search for a book of your choice!")
+    ).toBeInTheDocument();
+
+    expect(screen.getByText("Book Title:")).toBeInTheDocument();
+    expect(screen.getByText("Author:")).toBeInTheDocument();
+    expect(screen.getByText("Topic:")).toBeInTheDocument();
+    expect(screen.getByText("Language:")).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
     });
 });
-
-

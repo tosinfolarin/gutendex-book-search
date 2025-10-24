@@ -50,6 +50,7 @@ https://www.youtube.com/watch?v=AS79oJ3Fcf0
 
 While continuing to improve the application layout. I moved the types to a seperate file to improve the maintainability of the application.
 
+While conducting the unit testing, I also came across an issue that was stopping components from being rendered. I found that Jest doesn't recongise component libraries like Schadcn, so I had to mock these calls.
 
 Bugs that can be fixed to improve the application:
 - Currently when loading the information on when next is clicked on pagination 

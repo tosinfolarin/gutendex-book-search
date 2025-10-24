@@ -23,8 +23,8 @@ export default function BooksList({
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
 
-  // This Syncs with new books passed from props to allow the form 
-  //to be resubmitted and resets the pagination number to 1
+  /* This Syncs with new books passed from props to allow the form 
+  to be resubmitted and resets the pagination number to 1 */
   useEffect(() => {
     if (booksFromProps) setBooks(booksFromProps);
     setNextUrl(nextUrlFromProps || null);
@@ -141,7 +141,8 @@ export default function BooksList({
                 e.preventDefault();
                 handlePrevious();
               }}
-              className={`${prevUrl ? "bg-white hover:bg-gray-500 border border-black" : "bg-white border border-black text-black opacity-50 pointer-events-none"} rounded`}
+              className={`${prevUrl ? "bg-white hover:bg-gray-500 border border-black" : 
+              "bg-white border border-black text-black opacity-50 pointer-events-none"} rounded`}
 
             />
           </PaginationItem>
@@ -157,7 +158,8 @@ export default function BooksList({
                 e.preventDefault();
                 handleNext();
               }}
-              className={`${nextUrl ? "bg-white hover:bg-gray-500 border border-black" : "bg-white text-black border border-black opacity-50 pointer-events-none"} rounded`}
+              className={`${nextUrl ? "bg-white hover:bg-gray-500 border border-black" : 
+              "bg-white text-black border border-black opacity-50 pointer-events-none"} rounded`}
             />
           </PaginationItem>
         </PaginationContent>
