@@ -13,7 +13,6 @@ import { Book, BooksListProps } from '@/app/bookTypes';
 
 export default function BooksList({
   books: booksFromProps,
-  loading: loadingFromProps,
   nextUrl: nextUrlFromProps,
   prevUrl: prevUrlFromProps
 }: BooksListProps) {
@@ -75,7 +74,6 @@ export default function BooksList({
     }
   };
 
-  if (loadingFromProps) return <p className="text-center text-lg mt-10 text-white">Please wait, books will display shortly...</p>;
   if (error) return <p className='text-red-600'>Error: {error}</p>;
 
   return (
@@ -143,7 +141,7 @@ export default function BooksList({
                 e.preventDefault();
                 handlePrevious();
               }}
-              className={`${prevUrl ? "bg-white hover:bg-gray-500" : "text-white opacity-50 pointer-events-none"} rounded`}
+              className={`${prevUrl ? "bg-white hover:bg-gray-500 border border-black" : "bg-white border border-black text-black opacity-50 pointer-events-none"} rounded`}
 
             />
           </PaginationItem>
@@ -159,7 +157,7 @@ export default function BooksList({
                 e.preventDefault();
                 handleNext();
               }}
-              className={`${nextUrl ? "bg-white hover:bg-gray-500" : "text-white opacity-50 pointer-events-none"} rounded`}
+              className={`${nextUrl ? "bg-white hover:bg-gray-500 border border-black" : "bg-white text-black border border-black opacity-50 pointer-events-none"} rounded`}
             />
           </PaginationItem>
         </PaginationContent>

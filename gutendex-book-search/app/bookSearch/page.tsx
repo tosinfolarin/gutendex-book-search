@@ -10,14 +10,12 @@ import { Dispatch, SetStateAction } from 'react';
 
 type BookSearchProps = {
   setBooks: Dispatch<SetStateAction<any[]>>;
-  setLoading: Dispatch<SetStateAction<boolean>>;
   setNextPageUrl: Dispatch<SetStateAction<string | null>>;
   setPrevPageUrl: Dispatch<SetStateAction<string | null>>;
 };
 
 export default function BookSearch({
   setBooks,
-  setLoading,
   setNextPageUrl,
   setPrevPageUrl,
 }: BookSearchProps) {
@@ -27,9 +25,10 @@ export default function BookSearch({
   const [topic, setTopic] = useState("");
   const [languages, setLanguages] = useState<string[]>([]);
   const [allLanguages, setAllLanguages] = useState(false);
+  const [loading, setLoading] = useState(false);
   
-  /* this is toggle logic that removes or adds the language code ot the query 
-   depending on if its been  previously selected */
+  /* this is toggle logic that removes or adds the language code from the query 
+   depending on if its been previously selected */
   const handleLanguageChange = (languageCode: string) => {
     setLanguages((prev) =>
       prev.includes(languageCode)
@@ -56,6 +55,7 @@ export default function BookSearch({
     const languageQuery = languages.length > 0 ? `&languages=${languages.join(',')}` : '';
 
     try {
+      setLoading(true)
       const response = await fetch(`${URL}/books?search=${encodedQuery}${languageQuery}`, {
         method: "GET",
         headers: {
@@ -78,6 +78,12 @@ export default function BookSearch({
       setLoading(false);
     }
   };
+  
+  if (loading) return (
+    <div className="flex items-center justify-center">
+      <p className="text-center text-lg mt-10 bg-white text-black px-2 py-1 border border-black rounded-md">Please wait while we search the shelves, books will display shortly...</p>;
+   </div>
+  )
 
   return (
     <div>

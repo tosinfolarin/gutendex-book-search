@@ -10,7 +10,6 @@ import Link from 'next/link';
 
 function FindBooks() {
     const [books, setBooks] = useState<Book[]>([]);
-    const [loading, setLoading] = useState(false);
     const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
     const [prevPageUrl, setPrevPageUrl] = useState<string | null>(null);
     
@@ -39,7 +38,6 @@ function FindBooks() {
         </div>
         <BookSearch
         setBooks={setBooks}
-        setLoading={setLoading}
         setNextPageUrl={setNextPageUrl}
         setPrevPageUrl={setPrevPageUrl}
         />
@@ -47,7 +45,6 @@ function FindBooks() {
         {books.length > 0 && (
         <BooksList
           books={books}
-          loading={loading}
           nextUrl={nextPageUrl}
           prevUrl={prevPageUrl}
         />

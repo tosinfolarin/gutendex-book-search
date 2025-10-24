@@ -52,7 +52,7 @@ While continuing to improve the application layout. I moved the types to a seper
 
 
 Bugs that can be fixed to improve the application:
-- Currently when loading the information to tell the user it is loading isn't displaying as expected
+- Currently when loading the information on when next is clicked on pagination 
 - Currently if the API call returns an empty array, there is no information being displayed to the user to say this
 - Improve responsiveness
 - background Image pixelation on search
