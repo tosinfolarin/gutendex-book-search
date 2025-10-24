@@ -13,7 +13,6 @@ describe('bookSearch', () => {
       render(
         <BookSearch
           setBooks={jest.fn()}
-          setLoading={jest.fn()}
           setNextPageUrl={jest.fn()}
           setPrevPageUrl={jest.fn()}
         />

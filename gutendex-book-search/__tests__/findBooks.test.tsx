@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import BooksList, { Book } from '@/app/bookResults/page';
-import BookSearch from '@/app/bookSearch/page';
+import BooksList from '@/app/bookResults/page';
+import { Book } from '@/app/bookTypes';
 
 const mockBooks: Book[] = [
     {
