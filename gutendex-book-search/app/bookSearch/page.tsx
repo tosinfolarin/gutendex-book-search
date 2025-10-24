@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-
 import { Dispatch, SetStateAction } from 'react';
 
 type BookSearchProps = {
@@ -117,17 +116,17 @@ export default function BookSearch({
           onChange={(event) => setTopic(event.target.value)} 
         />
 
-      <h1 className="text-xl font-semibold">Language:</h1>
-      <div className="flex flex-col sm:flex-row items-center gap-2">
-        <Checkbox id="english" checked={languages.includes("en")} onCheckedChange={() => handleLanguageChange("en")}/>
-        <Label htmlFor="english">English</Label>
-        <Checkbox id="french" checked={languages.includes("fr")} onCheckedChange={() => handleLanguageChange("fr")}/>
-        <Label htmlFor="french">French</Label>
-        <Checkbox id="finnish" checked={languages.includes("fi")} onCheckedChange={() => handleLanguageChange("fi")}/>
-        <Label htmlFor="finnish">Finnish</Label>
-        <Checkbox id="all" checked={allLanguages} onCheckedChange={() => setAllLanguages(prev => !prev)}/>
-        <Label htmlFor="all">Display All</Label>
-      </div>
+        <h1 className="text-xl font-semibold">Language:</h1>
+        <div className="flex flex-col sm:flex-row items-center gap-2">
+          <Checkbox id="english" checked={languages.includes("en")} onCheckedChange={() => handleLanguageChange("en")}/>
+          <Label htmlFor="english">English</Label>
+          <Checkbox id="french" checked={languages.includes("fr")} onCheckedChange={() => handleLanguageChange("fr")}/>
+          <Label htmlFor="french">French</Label>
+          <Checkbox id="finnish" checked={languages.includes("fi")} onCheckedChange={() => handleLanguageChange("fi")}/>
+          <Label htmlFor="finnish">Finnish</Label>
+          <Checkbox id="all" checked={allLanguages} onCheckedChange={() => setAllLanguages(prev => !prev)}/>
+          <Label htmlFor="all">Display All</Label>
+        </div>
 
         <Button type="submit" variant="outline" className="w-full">
           Submit 

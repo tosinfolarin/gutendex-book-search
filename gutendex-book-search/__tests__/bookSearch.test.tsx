@@ -1,8 +1,6 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor  } from '@testing-library/react'
 import BookSearch from '@/app/bookSearch/page';
 import React from "react";
-
-import { fireEvent, waitFor } from "@testing-library/react";
 
 jest.mock("@/components/ui/input", () => ({
   Input: (props: any) => <input {...props} data-testid="mock-input" />,
