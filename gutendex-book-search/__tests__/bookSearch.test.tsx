@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react'
 import BookSearch from '@/app/bookSearch/page';
 import React from "react";
 
+import { fireEvent, waitFor } from "@testing-library/react";
+
 jest.mock("@/components/ui/input", () => ({
   Input: (props: any) => <input {...props} data-testid="mock-input" />,
 }));
@@ -19,6 +21,8 @@ jest.mock("@/components/ui/label", () => ({
 }));
 
 describe('bookSearch', () => {
+  global.fetch = jest.fn();
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -44,11 +48,46 @@ describe('bookSearch', () => {
 
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
   });
+  
+  it('should call the gutendex api when the form is submitted', async () => {
+      (fetch as jest.Mock).mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          results: [
+            { id: 1, title: "Mock Book 1" },
+            { id: 2, title: "Mock Book 2" },
+          ],
+          next: null,
+          previous: null,
+        }),
+      });
 
-  it.skip('should call the gutendex api when the form is submitted', () => {
-    // should call the gutendex when submit button is clicked
-    // display form 
-    // mock submit
-    // mock api call
-  });
+      render(
+        <BookSearch
+          setBooks={mockSetBooks}
+          setNextPageUrl={mockSetNextPageUrl}
+          setPrevPageUrl={mockSetPrevPageUrl}
+        />
+      );
+
+      fireEvent.change(screen.getByPlaceholderText("Title"), {
+        target: { value: "Mock Title" },
+      });
+  
+      fireEvent.submit(screen.getByRole("button", { name: /submit/i }));
+  
+      await waitFor(() => {
+        expect(mockSetBooks).toHaveBeenCalledWith([
+          { id: 1, title: "Mock Book 1" },
+          { id: 2, title: "Mock Book 2" },
+        ]);
+        expect(mockSetNextPageUrl).toHaveBeenCalledWith(null);
+        expect(mockSetPrevPageUrl).toHaveBeenCalledWith(null);
+      });
+  
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringContaining("Mock%20Title"),
+        expect.any(Object)
+      );
+    });
 });
