@@ -1,33 +1,29 @@
 # gutendex-book-search
 This displays book information fetched from the Gutendex API.
 
-I decided to use Next.js in creeting this application due to Alex informing me that NLPatent uses Next.js. Although I had not used Next.js before this, I beleived this would be good practice so I decided to take on the challenge.
+I decided to use Next.js in creating this application due to Alex informing me that NLPatent uses Next.js. I beleivded this would be good practice so I decided to take on the challenge.
 
-First I went through a YouTube tutorial on Next and how it works. I then began in setting up the Next App. 
+I went through a YouTube tutorial on Next.js as a refresher to understand how and how it works. I then began the project in setting up the Next App. 
 
 ![Alt text](image.png)
 
-I ran Npm run dev to confirm the Next.JS app is running and this is where I have been observing the UI changes.
+I ran Npm run dev to confirm the Next.JS app is running and this is where I have been observing the UI changes through the development.
 
 Decisions on UI:
 - Library background image for fitting web app purpose.
 - Intentional simple colours in consideration of those who are colour blind allowing for easy reading.
 - Only displaying a few books per row to allow for better readability and not to overwhelm users
-- Form and books on same page, this allows users to scroll easily and submit a new search
+- Form and books on same page, this allows users to scroll easily and submit a new search if they don't see what they are looking for on the page
 
-The first new learning I came across was that the page name needs to be called page.tsx but the page is referenced through its directory name.
+The first new learning I came across was that the page name needs to be called page.tsx but the page itself is referenced through its directory name. I then realised when using hooks, I must have ‘use client’ at the top of the page as hooks cannot be used inside server components. So this statement makes the page use a Client component.
 
-I then realised when using hooks, I must have ‘use client’ at the top of the page as hooks cannot be used inside server components. So this statement makes the page use a Client component.
-
-When building the UI I decided to use the Schadcn compoinent library.
+When building the UI I decided to use the Schadcn component library.
 
 I then came into an issue where I found out when using a <Select.Item /> component, each item must have a value prop that isn't an empty string "". This allows you to clear the selection.
 
 ![Alt text](image-1.png)
 
-I then tested the API from gutendex.com using Postman.
-
-I decided not to use any API keys as the gutendex API is a public API, if it was a private API, I would use API keys and utilise the gitignore file.
+I then tested the API from gutendex.com using Postman. When integrating the API into my design, I decided not to use any API keys as the gutendex API is a public API, if it was a private API, I would use API keys and utilise the gitignore file.
 
 After creating the form and the bookResults seperately, I change the book search so that the form is calling the books directly. i did this by adding a useState to store the books.
 
