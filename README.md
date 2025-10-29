@@ -1,8 +1,6 @@
 # gutendex-book-search
 This displays book information fetched from the Gutendex API.
 
-I decided to use Next.js in creating this application due to Alex informing me that NLPatent uses Next.js. I beleivded this would be good practice so I decided to take on the challenge.
-
 I went through a YouTube tutorial on Next.js as a refresher to understand how and how it works. I then began the project in setting up the Next App. 
 
 ![Alt text](image.png)
