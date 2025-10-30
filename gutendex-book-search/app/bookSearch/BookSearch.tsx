@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Dispatch, SetStateAction } from 'react';
+import type { Book } from "../bookTypes";
 
 type BookSearchProps = {
-  setBooks: Dispatch<SetStateAction<any[]>>;
+  setBooks: Dispatch<SetStateAction<Book[]>>;
   setNextPageUrl: Dispatch<SetStateAction<string | null>>;
   setPrevPageUrl: Dispatch<SetStateAction<string | null>>;
 };
