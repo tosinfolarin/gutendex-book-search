@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Dispatch, SetStateAction } from 'react';
 
 type BookSearchProps = {
-  setBooks: Dispatch<SetStateAction<any[]>>;
+  setBooks: Dispatch<SetStateAction<[]>>;
   setNextPageUrl: Dispatch<SetStateAction<string | null>>;
   setPrevPageUrl: Dispatch<SetStateAction<string | null>>;
 };

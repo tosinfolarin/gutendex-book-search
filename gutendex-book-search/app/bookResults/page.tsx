@@ -52,8 +52,12 @@ export default function BooksList({
         } else {
           throw new Error('Invalid API response structure');
         }
-      } catch (err: any) {
-        setError(err.message || 'Failed to fetch books.');
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('Failed to fetch books.');
+        }
       }
     };
 
