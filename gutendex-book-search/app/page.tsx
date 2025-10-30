@@ -6,7 +6,7 @@ export default function Homepage() {
     style={{ backgroundImage: "url('/images/LibraryBackground.png')" }}
     >
       <Link
-        href="findBooks"
+        href="bookResults"
         role="linkToBookSearch"
         className="
           flex flex-col gap-[32px] row-start-2 items-center sm:items-start
