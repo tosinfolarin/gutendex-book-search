@@ -7,12 +7,10 @@ import { useState } from 'react';
 import type { Book } from '../bookTypes';
 import Link from 'next/link';
 
-
 function BookResults() {
     const [books, setBooks] = useState<Book[]>([]);
     const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
     const [prevPageUrl, setPrevPageUrl] = useState<string | null>(null);
-    
 
   return (
     <div
