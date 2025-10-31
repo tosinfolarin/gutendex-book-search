@@ -23,8 +23,7 @@ export default function BooksList({
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
 
-  /* This Syncs with new books passed from props to allow the form 
-  to be resubmitted and resets the pagination number to 1 */
+  /* Sync with new props to reset pagination */
   useEffect(() => {
     if (booksFromProps) setBooks(booksFromProps);
     setNextUrl(nextUrlFromProps || null);
@@ -53,11 +52,7 @@ export default function BooksList({
           throw new Error('Invalid API response structure');
         }
       } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError('Failed to fetch books.');
-        }
+        setError(err instanceof Error ? err.message : 'Failed to fetch books.');
       }
     };
 
@@ -78,96 +73,113 @@ export default function BooksList({
     }
   };
 
-  if (error) return <p className='text-red-600'>Error: {error}</p>;
+  if (error) return <p className="text-red-600 text-center p-4">Error: {error}</p>;
 
   return (
-    <div style={{ padding: '40px' }}>
+    <div className="p-4 sm:p-6 md:p-10">
       <ul
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)', // 3 equal columns
-          gap: '50px',
-          listStyle: 'none',
-          padding: '20px',
-          margin: 0,
-          justifyItems: 'center',
-        }}
+        className="
+          grid 
+          gap-6 
+          sm:gap-8 
+          md:gap-12 
+          list-none 
+          p-0 
+          m-0 
+          justify-items-center
+          grid-cols-1
+          sm:grid-cols-2
+          md:grid-cols-3
+        "
       >
         {books.map((book) => (
           <li
             key={book.id}
-            style={{
-              textAlign: 'center',
-              background: '#FFFFFF',
-              padding: '20px',
-              border: '1px solid #ccc',
-              borderRadius: '8px',
-              width: '100%',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            }}
+            className="
+              text-center
+              bg-white 
+              p-4 
+              sm:p-6 
+              border 
+              border-gray-300 
+              rounded-lg 
+              w-full 
+              shadow-md
+              hover:shadow-lg 
+              transition-shadow
+              flex 
+              flex-col 
+              items-center
+            "
           >
-            <h2
-              style={{
-                fontSize: '1.2rem',
-                justifyContent: 'center',
-                fontWeight: 'bold',
-              }}
-            >{book.title}
-            </h2>
+            <h2 className="text-lg sm:text-xl font-bold mb-2">{book.title}</h2>
 
             {book.formats['image/jpeg'] && (
               <img
                 src={book.formats['image/jpeg']}
                 alt={`${book.title} cover`}
-                style={{
-                  width: '150px',
-                  height: 'auto',
-                  margin: '10px auto',
-                  display: 'block' }}
+                className="w-32 sm:w-40 md:w-48 h-auto mb-3 rounded-md shadow-sm"
               />
             )}
-            <p>
+
+            <p className="text-sm sm:text-base mb-1">
               <strong>Author:</strong>{' '}
               {book.authors.map((author) => author.name).join(', ')}
             </p>
-            <p>
-              <strong>Topics/Subjects: </strong> {book.subjects}
+
+            <p className="text-sm sm:text-base text-gray-600">
+              <strong>Topics:</strong>{' '}
+              {Array.isArray(book.subjects)
+                ? book.subjects.join(', ')
+                : book.subjects}
             </p>
           </li>
         ))}
       </ul>
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                handlePrevious();
-              }}
-              className={`${prevUrl ? "bg-white hover:bg-gray-500 border border-black" : 
-              "bg-white border border-black text-black opacity-50 pointer-events-none"} rounded`}
 
-            />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#" isActive>
-              {currentPage}
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNext();
-              }}
-              className={`${nextUrl ? "bg-white hover:bg-gray-500 border border-black" : 
-              "bg-white text-black border border-black opacity-50 pointer-events-none"} rounded`}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <div className="mt-8 flex justify-center">
+        <Pagination>
+          <PaginationContent className="flex gap-2 sm:gap-4">
+            <PaginationItem>
+              <PaginationPrevious
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePrevious();
+                }}
+                className={`
+                  ${prevUrl
+                    ? "bg-white hover:bg-gray-100 border border-black text-black"
+                    : "bg-gray-100 border border-gray-300 text-gray-400 cursor-not-allowed"}
+                  rounded px-3 sm:px-5 py-2 text-sm sm:text-base
+                `}
+              />
+            </PaginationItem>
+
+            <PaginationItem>
+              <PaginationLink href="#" isActive className="px-4 py-2 text-sm sm:text-base">
+                {currentPage}
+              </PaginationLink>
+            </PaginationItem>
+
+            <PaginationItem>
+              <PaginationNext
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNext();
+                }}
+                className={`
+                  ${nextUrl
+                    ? "bg-white hover:bg-gray-100 border border-black text-black"
+                    : "bg-gray-100 border border-gray-300 text-gray-400 cursor-not-allowed"}
+                  rounded px-3 sm:px-5 py-2 text-sm sm:text-base
+                `}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </div>
     </div>
   );
 }
