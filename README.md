@@ -46,5 +46,4 @@ Bugs that can be fixed to improve the application:
 - Currently no message is given to the user when loading the information after pagination clicks
 - Currently if the API call returns an empty array, there is no information being displayed to the user to say this
 - Currently, long titles or topics change the layout of the page. Can set a specific character count for titles then add a tooltip on hover.
-- Improve responsiveness
 - background Image pixelation on search
